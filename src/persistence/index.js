@@ -2,10 +2,15 @@ const path = require('path');
 const fs = require('fs');
 const isLocal = process.env.ENV_NAME === 'local';
 
-const dataBaseDir = isLocal ? path.join(process.cwd(), './data') : '/etc/data';
+const dataBaseDir = isLocal ? path.join(process.cwd(), './data') : '/etc/todos';
 const dataBasePath = path.join(dataBaseDir, 'items.json');
 
-console.log('isLocal', { isLocal, dataBaseDir, dataBasePath });
+console.log('logger: ', {
+    ENV_NAME: process.env.ENV_NAME,
+    isLocal,
+    dataBaseDir,
+    dataBasePath,
+});
 
 if (!fs.existsSync(dataBaseDir)) {
     console.log('Creating data base dataBaseDir', dataBasePath);
