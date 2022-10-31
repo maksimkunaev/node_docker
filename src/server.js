@@ -1,22 +1,20 @@
-const ronin = require('ronin-server');
-const database = require('ronin-database');
-const mocks = require('ronin-mocks');
+const express = require('express');
+const app = express();
+const getItems = require('./routes/getItems');
+const addItem = require('./routes/addItem');
+const updateItem = require('./routes/updateItem');
+const deleteItem = require('./routes/deleteItem');
+const getOSDetails = require('./routes/getOSDetails');
 
-async function main() {
-    try {
-        await database.connect(process.env.CONNECTIONSTRING);
+app.use(express.json());
+app.use(express.static(__dirname + '/static'));
 
-        const server = ronin.server({
-            port: process.env.SERVER_PORT,
-        });
+app.get('/OSDetails', getOSDetails);
+app.get('/items', getItems);
+app.post('/items', addItem);
+app.put('/items/:id', updateItem);
+app.delete('/items/:id', deleteItem);
 
-        server.use('/', mocks.server(server.Router()));
+const PORT = process.env.SERVER_PORT || 3000;
 
-        const result = await server.start();
-        console.info(result);
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-main();
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

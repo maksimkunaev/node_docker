@@ -35,12 +35,10 @@ const storeItem = async item => {
         const items = await getItems();
 
         items.push(item);
-        console.log('storeItem 1', items, dataBasePath);
 
         fs.writeFileSync(dataBasePath, JSON.stringify(items));
 
         const items2 = await getItems();
-        console.log('storeItem items2', items2);
     } catch (e) {
         return [];
     }

@@ -1,3 +1,5 @@
+Example based on [https://docs.docker.com/get-started/](https://docs.docker.com/get-started/)
+
 Create an image using the command
 
 -   `docker build --tag node-docker .`

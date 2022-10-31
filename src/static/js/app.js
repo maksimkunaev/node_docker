@@ -13,11 +13,16 @@ function App() {
 
 function TodoListCard() {
     const [items, setItems] = React.useState(null);
+    const [currentOSDetails, setCurrentOSDetails] = React.useState('');
 
     React.useEffect(() => {
         fetch('/items')
             .then(r => r.json())
             .then(setItems);
+
+        fetch('/OSDetails')
+            .then(r => r.json())
+            .then(setCurrentOSDetails);
     }, []);
 
     const onNewItem = React.useCallback(
@@ -52,6 +57,10 @@ function TodoListCard() {
     return (
         <React.Fragment>
             <AddItemForm onNewItem={onNewItem} />
+            <p>{currentOSDetails.osName}</p>
+            <p>{currentOSDetails.dataBasePath}</p>
+            <p>{currentOSDetails.logName}</p>
+
             {items.length === 0 && (
                 <p className="text-center">
                     You have no todo items yet! Add one above!
